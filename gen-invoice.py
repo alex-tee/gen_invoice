@@ -116,7 +116,7 @@ print('replaced placeholders')
 
 # insert the items in the tmp template
 total = 0.00
-for item in args.items:
+for item in reversed(args.items):
     items = item.split(',')
     descr = items[0]
     qty = int(items[1])
