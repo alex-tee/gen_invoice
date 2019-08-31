@@ -44,8 +44,9 @@ def find_company(name):
 
 # returns a string with 2 decimal points from
 # the given float
-def float_to_two_dec_string(num):
-    return '{:.2f}'.format(num)
+def float_to_string(num,n_decimals):
+    fmt = '{:.' + str(n_decimals) + 'f}'
+    return fmt.format(num)
 
 # inserts the given text at the given line number
 # in the given file
@@ -127,15 +128,15 @@ for item in reversed(args.items):
 <td style="text-align:right">{}</td>
 <td style="text-align:right">{}</td>
 </tr>""".format(
-        descr, qty, float_to_two_dec_string(rate),
-        float_to_two_dec_string (qty * rate))
+        descr, qty, float_to_string(rate, 3),
+        float_to_string (qty * rate, 2))
     # insert at line 32
     insert_at_line(tmp_file, 32, value)
     total += qty * rate
 
 # replace the total
 replace_in_file(
-    tmp_file, '@TOTAL@', float_to_two_dec_string(total))
+    tmp_file, '@TOTAL@', float_to_string(total, 2))
 
 # replace the address and payment info
 my_address = ''
