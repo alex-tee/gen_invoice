@@ -94,14 +94,22 @@ parser.add_argument(
     "--my-payment-info-file",
     default=["MY_PAYMENT_INFO.html"],
     nargs=1, help="html to show for our payment info")
+parser.add_argument(
+    "--currency", metavar="CURRENCY",
+    nargs='?', default=None,
+    help="override currency specification")
 
 args = parser.parse_args()
 
-# get company, invoice id, current date
+# get company, invoice id, current date, currency
 company = find_company(args.company[0])
 print('found {}'.format(company['fullname']))
 invoice_id = args.invoice_id[0]
 curr_date = datetime.today().strftime('%Y-%m-%d')
+if args.currency is None:
+    currency = company['currency']
+else:
+    currency = args.currency
 
 # create the tmp template by replacing some placeholders
 switch = {
@@ -109,7 +117,7 @@ switch = {
     "@COMPANYNAME@": company['fullname'],
     "@COMPANYINFO@": company['info'].replace('\n','<br>'),
     "@INVOICEID@": invoice_id,
-    "@CURRENCY@": company['currency'],
+    "@CURRENCY@": currency,
     "@DAYSDUE@": str(company['daysdue']),
     }
 replace_placeholders(orig_file, switch)
