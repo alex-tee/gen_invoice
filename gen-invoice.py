@@ -45,7 +45,7 @@ def find_company(name):
 # returns a string with 2 decimal points from
 # the given float
 def float_to_string(num,n_decimals):
-    fmt = '{:.' + str(n_decimals) + 'f}'
+    fmt = '{:,.' + str(n_decimals) + 'f}'
     return fmt.format(num)
 
 # inserts the given text at the given line number
